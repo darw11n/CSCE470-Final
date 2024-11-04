@@ -19,7 +19,9 @@ For REST API fetch requests used to generate the corpus of documents
 $ pip install scikit-learn
 ```
 
-For train_test_split and evaluating the Naive Bayes algorithim
+For train_test_split and evaluating the Naive Bayes algorithim.\
+
+To easily install all requirements, a requirements text file has been added to the repo. You can install all requirements at once using pip install -r requirements.txt
 
 ## How to run
 
