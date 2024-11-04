@@ -28,9 +28,6 @@ def load_data(folder_path):
                 doc_id = f"{label}_{i}"
                 body_text = preprocess(article['body'])
                 dataset.append((doc_id, body_text, label))
-                if(i == 1):
-                    
-                    print(doc_id, body_text, label)
                 
     return dataset
 
@@ -38,7 +35,7 @@ def load_data(folder_path):
 dataset = load_data("articles_json/")
 
 # Split dataset into training and testing sets (70/30)
-train_data, test_data = train_test_split(dataset, test_size=0.3, random_state=42)
+train_data, test_data = train_test_split(dataset, test_size=0.3, random_state=17)
 
 # Initialize and train the classifier
 classifier = NaiveBayes(Labels)
