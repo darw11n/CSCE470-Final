@@ -1,0 +1,22 @@
+<!-- templates/predict.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Text Classification</title>
+</head>
+<body>
+    <h1>Text Classification Prediction</h1>
+    <form method="POST" action="/predict">
+        <label for="text">Enter text for classification:</label><br>
+        <textarea id="text" name="text" rows="8" cols="50"></textarea><br><br>
+        <input type="submit" value="Predict">
+    </form>
+    
+    {% if prediction %}
+        <h2>Prediction Result:</h2>
+        <p><strong>Predicted Label:</strong> {{ prediction }}</p>
+        <p><strong>Text:</strong> {{ text }}</p>
+    {% endif %}
+</body>
+</html>
