@@ -4,7 +4,12 @@
 <head>
     <meta charset="UTF-8">
     <title>Text Classification</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+
 </head>
+<nav>
+    <a href="{{ url_for('home') }}">Home</a>
+</nav>
 <body>
     <h1>Text Classification Prediction</h1>
     <form method="POST" action="/predict">

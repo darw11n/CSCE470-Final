@@ -3,36 +3,96 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Text Classification - Visualization</title>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-</head>
-<body>
-    <h1>Classification Label Distribution</h1>
-    <canvas id="chart" width="400" height="200"></canvas>
+    <title>Visualization</title>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
     <script>
-        const data = {{ data | tojson }};
-        const ctx = document.getElementById('chart').getContext('2d');
-        
-        new Chart(ctx, {
+        var chartdata = JSON.parse({{ data | tojson }});
+    </script>
+</head>
+
+<nav>
+    <a href="{{ url_for('home') }}">Home</a>
+</nav>
+
+<body>
+    <h1>Article Data Visualizations</h1>
+
+    <h2>Graph 1:</h2>
+    <!-- Tag Distribution Graph -->
+    <div id="tagDistribution"></div>
+    <script>
+        console.log(chartdata);
+        // Tag distribution
+        const tagNames = Object.keys(chartdata.articles_per_tag);
+        const articleCounts = Object.values(chartdata.articles_per_tag);
+
+        const tagDistribution = [{
+            x: articleCounts,
+            y: tagNames,
             type: 'bar',
-            data: {
-                labels: Object.keys(data),
-                datasets: [{
-                    label: 'Number of Documents per Label',
-                    data: Object.values(data),
-                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                    borderColor: 'rgba(75, 192, 192, 1)',
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                scales: {
-                    y: {
-                        beginAtZero: true
-                    }
-                }
-            }
-        });
+            orientation: 'h',
+            marker: { color: 'skyblue' }
+        }];
+
+        const tagLayout = {
+            title: 'Distribution of Articles by Tag',
+            xaxis: { title: 'Number of Articles' },
+            yaxis: { title: 'Tags' }
+        };
+        Plotly.newPlot('tagDistribution', tagDistribution, tagLayout);
+    </script>
+
+    <h2>Graph 2:</h2>
+    <!-- Average Document Length per Tag Graph -->
+    <div id="avgDocumentLength"></div>
+
+    <script>
+        // Average Document Length per Tag
+        const avgLengths = Object.values(chartdata.avg_length_per_tag);
+
+        const lengthData = [{
+            x: avgLengths,
+            y: tagNames,
+            type: 'bar',
+            orientation: 'h',
+            marker: { color: 'lightgreen' }
+        }];
+
+        const lengthLayout = {
+            title: 'Average Document Length by Tag',
+            xaxis: { title: 'Average Length (Words)' },
+            yaxis: { title: 'Tags' }
+        };
+
+        Plotly.newPlot('avgDocumentLength', lengthData, lengthLayout);
+    </script>
+
+    <h2>Graph 3:</h2>
+    <!-- Average Document Length per Tag Graph -->
+    <div id="pubChart"></div>
+
+    <script>
+        const traces = [];
+        const publicationDatesByTag = chartdata.publication_dates;
+        for (const tag in publicationDatesByTag) {
+            const dates = publicationDatesByTag[tag].map(dateStr => new Date(dateStr));
+            traces.push({
+                x: dates,
+                type: 'histogram',
+                name: tag,
+                opacity: 0.6
+            });
+        }
+
+        const layout = {
+            title: 'Publication Date Distribution by Tag',
+            xaxis: { title: 'Publication Date' },
+            yaxis: { title: 'Number of Articles' },
+            barmode: 'overlay'
+        };
+
+        Plotly.newPlot('pubChart', traces, layout);
     </script>
 </body>
 </html>

@@ -19,7 +19,20 @@ For REST API fetch requests used to generate the corpus of documents
 $ pip install scikit-learn
 ```
 
-For train_test_split and evaluating the Naive Bayes algorithim.\
+For train_test_split and evaluating the Naive Bayes algorithim.
+
+```bash
+$ pip install Flask==1.1.4
+```
+
+For running the server and hosting the website.
+
+```bash
+$ pip install markupsafe==2.0.1
+```
+
+Resolving a potential issue with Flask.
+
 
 To easily install all requirements, a requirements text file has been added to the repo. You can install all requirements at once using pip install -r requirements.txt
 
