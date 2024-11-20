@@ -51,3 +51,12 @@ After the corpus is generated, the core algorithim is implemented in the files [
 $ python3 coreAlgo.py
 ```
 
+Now, to demonstrate the hosted deployement of the server, run:
+
+
+```bash
+$ python3 -m flask run
+```
+
+This will launch the flask app from app.py, allowing you interact with the algorithim and visualize the data.
+
